@@ -3,15 +3,14 @@ package org.sdargol.menu.commands;
 import org.sdargol.core.ScannerManager;
 import org.sdargol.core.Storage;
 import org.sdargol.dto.Person;
+import org.sdargol.menu.commands.core.ICommand;
 
-import java.util.List;
 import java.util.Scanner;
 
 public class AddPersonCommand {
-    public static ICommand get(){
-        return () -> {
+    public static ICommand<Storage<Person>> get(){
+        return (src) -> {
             Scanner scanner = ScannerManager.get();
-            List<Person> persons = Storage.getPersonsStorage();
 
             System.out.print("Enter first name: ");
             String firstName = scanner.next();
@@ -23,7 +22,7 @@ public class AddPersonCommand {
                     .setLastName(lastName)
                     .build();
 
-            persons.add(person);
+            src.getStorage().add(person);
         };
     }
 }

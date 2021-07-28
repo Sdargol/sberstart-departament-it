@@ -1,14 +1,24 @@
 package org.sdargol.core;
 
-import org.sdargol.dto.Person;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class Storage {
-    private final static List<Person> persons = new ArrayList<>();
+public class Storage <T>{
+    private List<T> storage;
 
-    public static List<Person> getPersonsStorage(){
-        return persons;
+    private Storage(){
+        storage = new ArrayList<>();
+    }
+
+    public static <S> Storage<S> create(){
+        return new Storage<>();
+    }
+
+    public List<T> getStorage() {
+        return storage;
+    }
+
+    public void setStorage(List<T> storage) {
+        this.storage = storage;
     }
 }
