@@ -2,8 +2,13 @@ package com.sdargol.dto.request;
 
 import com.sdargol.entity.Document;
 
+import javax.validation.constraints.NotNull;
+
 public class CreateDocumentDTO {
+    @NotNull(message = "boxId null")
     private Integer boxId;
+
+    @NotNull
     private Document document;
 
     public CreateDocumentDTO() {

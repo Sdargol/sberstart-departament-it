@@ -3,11 +3,13 @@ package com.sdargol.service;
 import com.sdargol.entity.Box;
 import com.sdargol.repository.BoxRepository;
 import com.sdargol.service.api.IBox;
+import com.sdargol.service.exceptions.ServiceOperationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BoxService implements IBox {
@@ -30,11 +32,19 @@ public class BoxService implements IBox {
 
     @Override
     @Transactional
-    public Box update(Box el) {
-        Box boxSrc = boxRepository.findById(el.getId()).get();
-        boxSrc.setTitle(el.getTitle());
-        boxSrc.setBarcode(el.getBarcode());
-        return boxRepository.save(boxSrc);
+    public Box update(Box el) throws ServiceOperationException {
+        //Box boxSrc = boxRepository.findById(el.getId()).get();
+        Optional<Box> boxOptional = boxRepository.findById(el.getId());
+
+        if(!boxOptional.isPresent()){
+            throw new ServiceOperationException("Сущность не найдена");
+        }
+
+        Box box = boxOptional.get();
+
+        box.setTitle(el.getTitle());
+        box.setBarcode(el.getBarcode());
+        return boxRepository.save(box);
     }
 
     @Override
