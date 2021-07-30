@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Objects;
 
 @Service
 public class DocumentService implements IDocument {
@@ -24,36 +23,43 @@ public class DocumentService implements IDocument {
         this.boxRepository = boxRepository;
     }
 
-
     @Override
     public List<Document> getAll() {
         return docRepository.findAll();
     }
 
     @Override
+    @Transactional
     public Document update(Document el) {
-        return null;
+        Document document = docRepository.getById(el.getId());
+        document.setBarcode(el.getBarcode());
+        document.setTitle(el.getTitle());
+        return docRepository.save(document);
     }
 
     @Override
     public Document getById(Integer id) {
-        return null;
-    }
-
-    @Override
-    public Document delete(Integer id) {
-        return null;
+        return docRepository.findById(id).get();
     }
 
     @Override
     @Transactional
-    public Document create(Object doc) {
-        CreateDocumentDTO docDTO = (CreateDocumentDTO) doc;
-        Box box = boxRepository.findById(docDTO.getBoxId()).get();
-        box.setDocument(docDTO.getDocument());
+    public Document delete(Integer id) {
+        Document doc = docRepository.findById(id).get();
+        Box box = doc.getBox();
+        box.removeDocument(doc);
+        boxRepository.save(box);
+        return doc;
+    }
+
+    @Override
+    @Transactional
+    public Document create(CreateDocumentDTO doc) {
+        Box box = boxRepository.findById(doc.getBoxId()).get();
+        box.setDocument(doc.getDocument());
         box = boxRepository.save(box);
         Document document = box.getDocuments().stream()
-                .filter(d -> d.getBarcode().equals(docDTO.getDocument().getBarcode()))
+                .filter(d -> d.getBarcode().equals(doc.getDocument().getBarcode()))
                 .findFirst()
                 .get();
 

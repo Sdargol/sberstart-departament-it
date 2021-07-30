@@ -5,10 +5,7 @@ import com.sdargol.entity.Document;
 import com.sdargol.service.api.IDocument;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,21 +19,28 @@ public class DocumentController {
         this.docService = docService;
     }
 
+    @GetMapping
     public ResponseEntity<List<Document>> getAllDocuments(){
-        return null;
+        return ResponseEntity.ok(docService.getAll());
     }
-    public ResponseEntity<Document> getDocumentById(){
-        return null;
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Document> getDocumentById(@PathVariable Integer id){
+        return ResponseEntity.ok(docService.getById(id));
     }
 
     @PostMapping
     public ResponseEntity<Document> createDocument(@RequestBody CreateDocumentDTO doc){
         return ResponseEntity.ok(docService.create(doc));
     }
-    public ResponseEntity<Document> updateDocument(){
-        return null;
+
+    @PutMapping
+    public ResponseEntity<Document> updateDocument(@RequestBody Document document){
+        return ResponseEntity.ok(docService.update(document));
     }
-    public ResponseEntity<Document> deleteDocument(){
-        return null;
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Document> deleteDocument(@PathVariable Integer id){
+        return ResponseEntity.ok(docService.delete(id));
     }
 }

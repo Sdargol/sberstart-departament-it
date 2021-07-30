@@ -60,3 +60,41 @@ const createDocument = () => {
   })
 }
 
+const updateDocument = () => {
+  createRequest("/api/v1/documents", {
+      method: "PUT",
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8'
+      },
+      body: JSON.stringify({id:1, barcode: 7000000000555, title:'Updated document'})
+  })
+}
+
+const getAllDocuments = () => {
+  createRequest("/api/v1/documents", {
+      method: "GET",
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8'
+      }
+  })
+}
+
+const getDocumentById = () => {
+  createRequest("/api/v1/documents/1", {
+      method: "GET",
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8'
+      }
+  })
+}
+
+const deleteDocumentById = () => {
+  createRequest("/api/v1/documents/1", {
+      method: "DELETE",
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8'
+      }
+  })
+}
+
+

@@ -24,8 +24,8 @@ public class BoxService implements IBox {
     }
 
     @Override
-    public Box create(Object el) {
-        return boxRepository.save((Box)el);
+    public Box create(Box el) {
+        return boxRepository.save(el);
     }
 
     @Override

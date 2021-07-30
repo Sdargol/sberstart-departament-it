@@ -19,7 +19,7 @@ public class Box{
     //@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     //@JoinColumn(name = "box_id")
     @OneToMany(mappedBy = "box", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-    protected List<Document> documents;
+    private List<Document> documents;
 
     public Box() {
     }
@@ -73,6 +73,14 @@ public class Box{
     public void setDocument(Document document) {
         document.setBox(this);
         documents.add(document);
+    }
+
+    public void removeDocument(Document document) {
+        Document doc = documents.stream()
+                .filter(d -> d.getId().equals(document.getId()))
+                .findFirst()
+                .get();
+        documents.remove(doc);
     }
 
     @Override
