@@ -32,7 +32,11 @@ const createBox = () => {
         headers: {
           'Content-Type': 'application/json;charset=utf-8'
         },
-        body: JSON.stringify({id:0, barcode: 1000000000001, title: 'Из JavaScript', documents: [{id:0, title:'Test ManyToOne'}]})
+        body: JSON.stringify(
+          {id:0, barcode: 1000000000001, title: 'Из JavaScript', documents: [
+            {id:0, barcode: 9000000000000, title:'Test ManyToOne'},
+          ]}
+          )
     })
 }
 
@@ -44,5 +48,15 @@ const updateBox = () => {
         },
         body: JSON.stringify({id:1, barcode: 1000033300001, title: 'Из JavaScript New', documents: []})
     })
+}
+
+const createDocument = () => {
+  createRequest("/api/v1/documents", {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8'
+      },
+      body: JSON.stringify({boxId:1, document: {id:0, barcode: 7000000000000, title:'Add document'}})
+  })
 }
 

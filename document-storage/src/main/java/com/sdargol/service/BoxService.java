@@ -24,22 +24,22 @@ public class BoxService implements IBox {
     }
 
     @Override
-    public Box create(Box box) {
-        return boxRepository.save(box);
+    public Box create(Object el) {
+        return boxRepository.save((Box)el);
     }
 
     @Override
     @Transactional
-    public Box update(Box box) {
-        Box boxSrc = boxRepository.findById(box.getId()).get();
-        boxSrc.setTitle(box.getTitle());
-        boxSrc.setBarcode(box.getBarcode());
+    public Box update(Box el) {
+        Box boxSrc = boxRepository.findById(el.getId()).get();
+        boxSrc.setTitle(el.getTitle());
+        boxSrc.setBarcode(el.getBarcode());
         return boxRepository.save(boxSrc);
     }
 
     @Override
     public Box getById(Integer id) {
-        return boxRepository.getById(id);
+        return boxRepository.findById(id).get();
     }
 
     @Override

@@ -70,6 +70,11 @@ public class Box{
         this.documents = documents;
     }
 
+    public void setDocument(Document document) {
+        document.setBox(this);
+        documents.add(document);
+    }
+
     @Override
     public String toString() {
         return "Box{" +

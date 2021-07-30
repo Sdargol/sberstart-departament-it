@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin("*")
 @RequestMapping("/api/v1/boxes")
 public class BoxController{
     private final IBox boxService;
@@ -26,12 +25,7 @@ public class BoxController{
     @GetMapping("/{id}")
     public ResponseEntity<Box> getBoxById(@PathVariable Integer id){
         Box box = boxService.getById(id);
-        Box box1 = new Box();
-        box1.setId(box.getId());
-        box1.setBarcode(box.getBarcode());
-        box1.setTitle(box.getTitle());
-        box1.setDocuments(box.getDocuments());
-        return ResponseEntity.ok(box1);
+        return ResponseEntity.ok(box);
     }
 
     @PostMapping
