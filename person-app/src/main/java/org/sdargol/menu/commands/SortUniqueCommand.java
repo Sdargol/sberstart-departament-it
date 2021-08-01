@@ -13,7 +13,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class SortUniqueCommand {
-    private final static int cacheHashCode = PersonStorageManager.get().hashCode();
+    private final static int cacheHashCode = PersonStorageManager.getInstance().hashCode();
 
     public static ICommand<Storage<Person>> get(){
         return (src) -> {

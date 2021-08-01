@@ -10,11 +10,12 @@ import java.util.Scanner;
 public class AddPersonCommand {
     public static ICommand<Storage<Person>> get(){
         return (src) -> {
-            Scanner scanner = ScannerManager.get();
+            //Scanner scanner = ScannerManager.getInstance();
+            Scanner scanner = new Scanner(System.in);
 
-            System.out.print("Enter first name: ");
+            System.out.print("[ADD]: Enter first name: ");
             String firstName = scanner.next();
-            System.out.print("Enter last name: ");
+            System.out.print("[ADD]: Enter last name: ");
             String lastName = scanner.next();
 
             Person person = Person.getBuilder()
@@ -23,8 +24,10 @@ public class AddPersonCommand {
                     .build();
 
             src.getStorage().add(person);
+
         };
     }
+
 }
 
 

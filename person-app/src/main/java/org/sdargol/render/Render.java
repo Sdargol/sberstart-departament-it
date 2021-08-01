@@ -1,5 +1,6 @@
 package org.sdargol.render;
 
+import java.util.Locale;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 //Если необходимо произвести рендер не из главного потока, то
@@ -21,5 +22,16 @@ public class Render {
         while(!renderQueue.isEmpty()){
             renderQueue.poll().complete();
         }
+    }
+
+    //метод для "быстрого рендера"
+    //использовать, когда надо сразу вывести результат в консоль (например предложение о вводе данных)
+    public static void print(String prefix, String msg, boolean newLine){
+        String str = "[" + prefix.toUpperCase(Locale.ROOT) + "]: " + msg;
+        if(newLine){
+            System.out.println(str);
+            return;
+        }
+        System.out.print(str);
     }
 }
