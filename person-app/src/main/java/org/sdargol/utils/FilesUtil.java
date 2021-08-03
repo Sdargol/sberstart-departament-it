@@ -28,7 +28,7 @@ public class FilesUtil {
 
         List<T> objects = new ArrayList<>();
         //System.out.println(System.getProperty("java.class.path"));
-        String filePath = MAIN_DIR+"\\" + fileName + ".txt";
+        String filePath = MAIN_DIR+"//" + fileName + ".txt";
         List<String> lines = null;
 
         //Получаем список строк из файла

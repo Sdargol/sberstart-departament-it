@@ -57,6 +57,7 @@ const createDocument = () => {
         'Content-Type': 'application/json;charset=utf-8'
       },
       body: JSON.stringify({boxId:1, document: {id:0, barcode: 7000000000000, title:'Add document'}})
+      //body: JSON.stringify({boxId:null, document: null})
   })
 }
 

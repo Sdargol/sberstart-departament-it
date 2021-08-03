@@ -1,19 +1,19 @@
 package com.sdargol.controllers;
 
 import com.sdargol.dto.request.CreateDocumentDTO;
-import com.sdargol.dto.response.MessageDTO;
+import com.sdargol.dto.response.ErrorFieldDTO;
 import com.sdargol.entity.Document;
 import com.sdargol.service.api.IDocument;
 import com.sdargol.service.exceptions.ServiceOperationException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/documents")
@@ -51,7 +51,12 @@ public class DocumentController {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<MessageDTO> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
-        return ResponseEntity.ok(new MessageDTO("msg"));
+    public ResponseEntity<List<ErrorFieldDTO>> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
+        List<ErrorFieldDTO> messages = ex.getBindingResult()
+                .getAllErrors()
+                .stream()
+                .map(err -> new ErrorFieldDTO(((FieldError)err).getField(), err.getDefaultMessage()))
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(messages);
     }
 }
