@@ -51,7 +51,7 @@ public class DocumentController {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<MessageDTO> handleConstraintViolationException(MethodArgumentNotValidException e) {
+    public ResponseEntity<MessageDTO> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
         return ResponseEntity.ok(new MessageDTO("msg"));
     }
 }
